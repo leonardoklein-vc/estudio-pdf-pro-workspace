@@ -1,0 +1,1086 @@
+<style>
+/* ==========================================================================
+   MÓDULO DA BIBLIOTECA: ESTÚDIO PDF (DESIGN PREMIUM & ANIMAÇÕES)
+   Ambiente: Google Apps Script (Contagem / Controles / HCPA SAMIS)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. GLOBAIS, HUB E CORES UTILITÁRIAS
+   -------------------------------------------------------------------------- */
+.pdf-hub-container {
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  padding: 3rem 2rem;
+  min-height: 100vh;
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
+.pdf-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Cores Utilitárias */
+.bg-danger-light { background: #fee2e2; } .text-danger { color: #ef4444; }
+.bg-warning-light { background: #fef3c7; } .text-warning { color: #f59e0b; }
+.bg-success-light { background: #dcfce3; } .text-success { color: #10b981; }
+.bg-info-light { background: #e0f2fe; } .text-info { color: #0ea5e9; }
+.bg-purple-light { background: #f3e8ff; } .text-purple { color: #a855f7; }
+.bg-orange-light { background: #fff7ed; } .text-orange { color: #f97316; }
+.bg-navy-light { background: #eef2ff; } .text-navy { color: #312e81; }
+.bg-teal-light { background: #f0fdfa; } .text-teal { color: #0d9488; }
+.bg-slate-light { background: #f1f5f9; } .text-slate { color: #475569; }
+.bg-pink-light { background: #fdf2f8; } .text-pink { color: #db2777; }
+
+/* Loader Global */
+#pdf-global-loader {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+#pdf-global-loader h3 { color: #f8fafc; font-size: 1.5rem; letter-spacing: -0.5px; }
+#pdf-global-loader-sub { color: #94a3b8; font-size: 14px; }
+
+
+/* --------------------------------------------------------------------------
+   2. CARDS DE FERRAMENTAS (PADRÃO E IA)
+   -------------------------------------------------------------------------- */
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Card Padrão */
+.pdf-tool-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  cursor: pointer;
+  border: 1px solid rgba(0,0,0,0.03);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.6s ease-out forwards;
+}
+
+.pdf-tool-card:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border-color: rgba(0,0,0,0.08);
+}
+
+.pdf-tool-card .icon-box {
+  width: 54px;
+  height: 54px;
+  min-width: 54px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.pdf-tool-card:hover .icon-box { transform: scale(1.1) rotate(-3deg); }
+.pdf-tool-card .icon-box i { font-size: 28px; }
+
+.pdf-tool-card .tool-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.pdf-tool-card .tool-info h5 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 0.25rem 0;
+}
+
+.pdf-tool-card .tool-info p {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Staggered Animation para os Cards */
+.pdf-tool-card:nth-child(1) { animation-delay: 0.05s; }
+.pdf-tool-card:nth-child(2) { animation-delay: 0.10s; }
+.pdf-tool-card:nth-child(3) { animation-delay: 0.15s; }
+.pdf-tool-card:nth-child(4) { animation-delay: 0.20s; }
+.pdf-tool-card:nth-child(5) { animation-delay: 0.25s; }
+.pdf-tool-card:nth-child(6) { animation-delay: 0.30s; }
+.pdf-tool-card:nth-child(7) { animation-delay: 0.35s; }
+.pdf-tool-card:nth-child(8) { animation-delay: 0.40s; }
+.pdf-tool-card:nth-child(9) { animation-delay: 0.45s; }
+.pdf-tool-card:nth-child(10) { animation-delay: 0.50s; }
+.pdf-tool-card:nth-child(n+11) { animation-delay: 0.55s; }
+
+/* Cards de Inteligência Artificial (Premium) */
+.ai-tool-card {
+  position: relative;
+  border-color: #e2e8f0;
+}
+
+.ai-tool-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #8b5cf6, #d946ef, #0284c7);
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.ai-tool-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 15px 25px -5px rgba(139, 92, 246, 0.15), 0 8px 10px -6px rgba(139, 92, 246, 0.1);
+}
+
+.ai-tool-card:hover::before { opacity: 1; }
+.ai-tool-card:hover .icon-box { transform: scale(1.08) rotate(3deg); }
+.ai-tool-card .tool-info h5 { color: #1e293b !important; }
+.ai-tool-card .tool-info p { color: #475569 !important; font-size: 13px; }
+
+/* ==========================================================================
+   SELO ANIMADO (BADGE) PARA OS CARDS DE INTELIGÊNCIA ARTIFICIAL
+   ========================================================================== */
+.ai-tool-card::after {
+  content: 'auto_awesome'; /* Ícone de brilho (sparkle) do Material Icons */
+  font-family: 'Material Icons';
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: linear-gradient(135deg, #8b5cf6, #d946ef); /* Gradiente roxo e rosa */
+  color: white;
+  font-size: 13px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(139, 92, 246, 0.4);
+  pointer-events: none; /* Garante que o ícone não bloqueie o clique no card */
+  animation: pulseAiBadge 2.5s infinite ease-in-out;
+}
+
+/* Animação de "respiração" suave para o ícone */
+@keyframes pulseAiBadge {
+  0%, 100% { 
+    transform: scale(1); 
+    box-shadow: 0 2px 6px rgba(139, 92, 246, 0.4); 
+  }
+  50% { 
+    transform: scale(1.15); 
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.6); 
+  }
+}
+
+/* Prepara o card comum para receber elementos flutuantes */
+.new-tool-card {
+  position: relative;
+}
+
+/* Compartilha o selo NOVIDADE entre as IAs e as Ferramentas Novas Comuns */
+.ai-tool-card .tool-info::after,
+.new-tool-card .tool-info::after {
+  content: 'NOVIDADE';
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  background: linear-gradient(135deg, #0284c7, #4f46e5); /* Gradiente azul para roxo */
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.05rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(79, 70, 229, 0.3);
+  pointer-events: none;
+  text-transform: uppercase;
+}
+
+
+/* --------------------------------------------------------------------------
+   3. MESA DE TRABALHO & TOOLBAR
+   -------------------------------------------------------------------------- */
+.pdf-toolbar {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  position: sticky; 
+  top: 10px; 
+  z-index: 100;
+  overflow: hidden;
+  padding: 8px 16px;
+}
+
+.pdf-toolbar-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pdf-toolbar-main .btn-sm {
+  height: 38px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+}
+
+#pdf-context-submenu {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.btn-action { 
+  transition: all 0.3s ease; 
+  color: #fff !important; 
+  border: none !important;
+}
+
+/* Container Principal de Visualização */
+.pdf-preview-container {
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: 40px 25px; 
+  padding: 40px;
+  background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%);
+  border-radius: 16px; 
+  border: 2px dashed #cbd5e1;
+  min-height: 500px; 
+  max-height: 65vh; 
+  overflow-y: auto;
+  justify-content: center; 
+  align-content: flex-start;
+  transition: all 0.3s ease;
+  position: relative;
+  scroll-behavior: smooth; 
+  overscroll-behavior: contain; 
+}
+
+.pdf-preview-container:hover { border-color: #94a3b8; }
+
+/* Empty State (Mesa Vazia) */
+@keyframes floatDrop {
+  0%   { transform: translateY(0px); }
+  50%  { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+
+.empty-state-icon {
+  animation: floatDrop 3s ease-in-out infinite;
+  color: #94a3b8; 
+  text-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+
+/* --------------------------------------------------------------------------
+   4. COMPONENTES DO PDF (PÁGINAS E CANVAS)
+   -------------------------------------------------------------------------- */
+@keyframes popIn {
+  0%   { opacity: 0; transform: scale(0.8) translateY(20px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.pdf-page-wrapper {
+  position: relative; 
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  width: var(--card-width, 160px);
+  cursor: grab;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s;
+  animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  will-change: transform, opacity;
+}
+
+.pdf-page-wrapper:active  { cursor: grabbing; transform: scale(0.95); }
+
+.pdf-canvas-container {
+  width: 100%;
+  aspect-ratio: 1 / 1.414; /* Proporção A4 */
+  background: white;
+  border-radius: 8px; 
+  overflow: hidden; 
+  position: relative;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  user-select: none;
+}
+
+.pdf-page-wrapper:hover .pdf-canvas-container {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.pdf-canvas-container img { 
+  width: 100%; 
+  height: auto; 
+  display: block;
+  transition: transform 0.3s ease; 
+  backface-visibility: hidden;
+}
+
+/* Ações de Hover na Página */
+.pdf-page-actions {
+  position: absolute; top: 0; left: 0; 
+  width: 100%; height: 100%;
+  background: rgba(15, 23, 42, 0.6); 
+  backdrop-filter: blur(3px); 
+  -webkit-backdrop-filter: blur(3px);
+  display: flex; flex-wrap: wrap; 
+  justify-content: center; align-content: center; gap: 8px;
+  opacity: 0; transition: all 0.3s ease; z-index: 20;
+}
+
+.pdf-page-wrapper:hover .pdf-page-actions { opacity: 1; }
+
+.pdf-action-btn {
+  background: rgba(255, 255, 255, 0.2); 
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%; 
+  width: 36px; height: 36px; 
+  color: white; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s ease; backdrop-filter: blur(5px);
+}
+
+.pdf-action-btn:hover { background: white; color: #0f172a; transform: scale(1.1); }
+.pdf-action-btn.delete:hover { background: #ef4444; color: white; border-color: #ef4444; }
+
+/* Indicador de Número da Página */
+.pdf-page-number {
+  margin-top: 12px; font-weight: 600; font-size: 12px;
+  background: white; color: #475569; padding: 4px 12px;
+  border-radius: 20px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  text-align: center; width: auto; max-width: 100%;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  transition: 0.3s; border: 1px solid #e2e8f0;
+}
+
+.pdf-page-wrapper:hover .pdf-page-number {
+  background: #4f46e5; color: white; border-color: #4f46e5; 
+  transform: translateY(-5px);
+}
+
+
+/* --------------------------------------------------------------------------
+   5. SISTEMA VISUAL DE DRAG & DROP E SELEÇÃO
+   -------------------------------------------------------------------------- */
+.pdf-preview-container.drag-active {
+  border-color: #4f46e5 !important;
+  background: linear-gradient(135deg, #e0e7ff 0%, #eff6ff 100%) !important;
+  transform: scale(1.01);
+  box-shadow: 0 0 20px rgba(79, 70, 229, 0.2);
+}
+
+.pdf-page-wrapper.dragging, .pdf-page-wrapper.is-dragging { 
+  opacity: 0.4; transform: scale(0.95);
+}
+
+.pdf-page-wrapper.drag-over {
+  transform: scale(1.08) rotate(2deg);
+  filter: drop-shadow(0 0 10px rgba(79, 70, 229, 0.4));
+}
+
+.pdf-page-wrapper.drop-before::before,
+.pdf-page-wrapper.drop-after::after {
+  content: ''; position: absolute;
+  top: -5px; bottom: 25px; width: 4px;
+  background-color: #0d6efd; border-radius: 4px; z-index: 10;
+  box-shadow: 0 0 8px rgba(13, 110, 253, 0.5);
+}
+
+.pdf-page-wrapper.drop-before::before { left: -14px; }
+.pdf-page-wrapper.drop-after::after { right: -14px; }
+
+/* Ferramenta Lasso (Seleção em Massa) */
+.selection-box {
+  position: absolute; border: 1px dashed #4f46e5;
+  background: rgba(79, 70, 229, 0.12); pointer-events: none;
+  z-index: 95; border-radius: 2px; display: none;
+}
+
+.pdf-page-wrapper.lasso-hover .pdf-canvas-container {
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.6) !important;
+  transform: translateY(-6px);
+}
+
+
+/* --------------------------------------------------------------------------
+   6. MODOS DE FERRAMENTAS ESPECÍFICAS & BULK ACTIONS
+   -------------------------------------------------------------------------- */
+/* Cores do Header por Modo Padrão */
+.merge-mode { background-color: #dc3545 !important; }
+.split-mode { background-color: #ffc107 !important; color: #000 !important; }
+.extract-mode { background-color: #198754 !important; }
+.convert-mode { background-color: #0d6efd !important; }
+.protect-mode { background-color: #6f42c1 !important; }
+.repair-mode { background-color: #f97316 !important; }
+.paginate-mode { background-color: #312e81 !important; }
+.watermark-mode { background-color: #0d9488 !important; }
+.redact-mode { background-color: #475569 !important; }
+.ocr-mode { background-color: #db2777 !important; }
+.compress-mode { background-color: #84cc16 !important; color: #000 !important; }
+.sign-mode { background-color: #2563eb !important; }
+.grayscale-mode { background-color: #71717a !important; }
+.metadata-mode { background-color: #57534e !important; }
+.extract_images-mode { background-color: #eab308 !important; color: #000 !important;}
+.crop-mode { background-color: #f43f5e !important; } 
+.n_up-mode { background-color: #06b6d4 !important; color: #000 !important; } 
+.header_footer-mode { background-color: #334155 !important; } /* <-- NOVA (Slate Escuro) */
+/* Cores do Header por Modo IA */
+.summarize-mode { background-color: #8b5cf6 !important; }
+.translate-mode { background-color: #d946ef !important; }
+.chat-mode { background-color: #0284c7 !important; }
+.quiz_generator-mode { background-color: #16a34a !important; } /* <-- NOVA IA (Verde) */
+.mindmap-mode { background-color: #e11d48 !important; }         /* <-- NOVA IA (Rose) */
+/* --- NOVA FERRAMENTA: LEITOR DE PDF --- */
+.read_pdf-mode { background-color: #059669 !important; }
+/* --- NOVAS FERRAMENTAS: GOVERNANÇA E EDIÇÃO AVANÇADA --- */
+.pdf_stats-mode { background-color: #0dcaf0 !important; color: #000 !important; }
+.remove_blank-mode { background-color: #dc3545 !important; }
+.flatten-mode { background-color: #ffc107 !important; color: #000 !important; }
+.overlay-mode { background-color: #0d6efd !important; }
+
+/* Bulk Action Bar */
+.bulk-action-bar {
+  background: #004a8d; color: white; padding: 10px 20px;
+  border-radius: 8px; margin-bottom: 15px; display: flex;
+  align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: all 0.3s ease; position: sticky; top: 75px; z-index: 95;
+}
+
+/* Modo: Extrair */
+.pdf-extract-check {
+  display: none; position: absolute; top: 8px; left: 8px; 
+  z-index: 25; width: 22px; height: 22px; cursor: pointer; 
+  accent-color: #10b981; margin: 0;
+}
+.mode-extract .pdf-extract-check { display: block; }
+.mode-extract .pdf-page-wrapper:not(.selected) .pdf-canvas-container {
+  opacity: 0.4; filter: grayscale(50%);
+}
+.mode-extract .pdf-page-wrapper.selected .pdf-canvas-container {
+  box-shadow: 0 0 0 4px #10b981;
+}
+
+/* Modo: Dividir (Tesouras) */
+@keyframes pulseScissor {
+  0%   { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4); }
+  70%  { box-shadow: 0 0 0 10px rgba(79, 70, 229, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); }
+}
+
+.pdf-cut-zone {
+  position: absolute; right: -21px; top: 5%; bottom: 30px;
+  width: 22px; cursor: pointer; display: none; align-items: center; 
+  justify-content: center; z-index: 10;
+}
+.mode-split .pdf-cut-zone { display: flex; }
+.pdf-cut-zone::before {
+  content: ''; position: absolute; top: 0; bottom: 0; left: 50%;
+  transform: translateX(-50%); border-left: 2px dashed #93c5fd; 
+  opacity: 0.3; transition: all 0.3s ease;
+}
+.pdf-page-wrapper:hover .pdf-cut-zone::before, .pdf-cut-zone:hover::before { 
+  opacity: 1; border-left: 2px dashed #4f46e5;
+}
+.pdf-cut-zone.is-cut::before { opacity: 1; border-left: 3px dashed #ef4444; }
+
+.cut-icon-wrapper {
+  position: relative; background: white; color: #4f46e5;
+  border-radius: 50%; width: 28px; height: 28px; display: flex; 
+  align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  opacity: 0; transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transform: scale(0.5); border: 1px solid #e0e7ff;
+}
+.pdf-page-wrapper:hover .cut-icon-wrapper, .pdf-cut-zone:hover .cut-icon-wrapper { 
+  opacity: 1; transform: scale(1); animation: pulseScissor 1.5s infinite; 
+}
+.pdf-cut-zone:hover .cut-icon-wrapper { background: #4f46e5; color: white; border-color: #4f46e5; }
+.pdf-cut-zone.is-cut .cut-icon-wrapper {
+  background: #ef4444; color: white; opacity: 1; transform: scale(1.1); 
+  border-color: #ef4444; animation: none; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4);
+}
+.pdf-cut-zone i { font-size: 15px; transform: rotate(270deg); }
+
+/* Modo: Ocultar (Redact) */
+#redact-workspace {
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.08);
+  background: #f8fafc !important;
+}
+#redact-workspace::-webkit-scrollbar { width: 6px; }
+#redact-workspace::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+.mode-redact .pdf-page-wrapper { cursor: default !important; }
+.mode-redact .pdf-canvas-container { cursor: crosshair !important; transition: none; }
+.mode-redact .pdf-canvas-container:active { outline: 2px solid #000; background-color: rgba(0,0,0,0.1); }
+
+/* Modo: Marca d'água e Paginação */
+.paginate-mode .row, .watermark-mode .row { margin-left: 0; margin-right: 0; }
+.wm-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; display: flex; align-items: center;
+    justify-content: center; z-index: 50; overflow: hidden;
+}
+.wm-preview-text { white-space: nowrap; text-align: center; transform-origin: center; }
+
+/* Submenu Contextual de Formulários */
+#pdf-context-submenu .form-select-sm, #pdf-context-submenu .form-control-sm {
+  transition: all 0.2s ease; border: 1px solid #d1d5db;
+}
+#pdf-context-submenu .form-select-sm:focus, #pdf-context-submenu .form-control-sm:focus {
+  border-color: #4f46e5; box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+#pdf-context-submenu .btn { white-space: nowrap; }
+
+
+/* --------------------------------------------------------------------------
+   7. CHAT & INTELIGÊNCIA ARTIFICIAL (ESTADOS DA INTERFACE)
+   -------------------------------------------------------------------------- */
+/* Regras de Esconder Botões na Toolbar ao abrir Chat */
+.mode-chat-active .btn-zoom,
+.mode-chat-active .btn-rotate,
+.mode-chat-active .btn-undo,
+.mode-chat-active .btn-redo,
+.mode-chat-active .btn-add-blank,
+.mode-chat-active .vr {
+  display: none !important;
+}
+
+.mode-chat-active .btn-add-pdf,
+.mode-chat-active .btn-delete-selected,
+.mode-chat-active .btn-clear-desk {
+  display: inline-flex !important;
+}
+
+/* Sidebar e Miniaturas do Chat (COM HOVER SUAVE) */
+.thumb-item-chat img { transition: all 0.2s ease-in-out; }
+.thumb-item-chat:hover img { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.1) !important; }
+
+.chat-page-thumb {
+  width: 100%; border-radius: 6px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  border: 2px solid transparent; transition: transform 0.2s;
+}
+.chat-page-thumb:hover { transform: scale(1.02); border-color: #0284c7; }
+
+/* Custom Scrollbars para as áreas do Chat (Deixa premium e oculta barra nativa) */
+#chat-history::-webkit-scrollbar, #chat-sidebar::-webkit-scrollbar { width: 6px; }
+#chat-history::-webkit-scrollbar-track, #chat-sidebar::-webkit-scrollbar-track { background: transparent; }
+#chat-history::-webkit-scrollbar-thumb, #chat-sidebar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+#chat-history::-webkit-scrollbar-thumb:hover, #chat-sidebar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* Remove a borda azul feia do Input de chat do Bootstrap ao clicar */
+#chat-input:focus { outline: none; box-shadow: none; border-color: transparent; }
+
+/* Balões de Conversa */
+.chat-bubble {
+  max-width: 85%; padding: 15px 20px; border-radius: 12px;
+  font-size: 15px; line-height: 1.6; position: relative;
+  animation: popIn 0.3s ease-in-out;
+}
+.chat-bubble.user-bubble {
+  align-self: flex-end; background-color: #0284c7; color: #fff;
+  border-bottom-right-radius: 2px;
+}
+.chat-bubble.ai-bubble {
+  align-self: flex-start; background-color: #f1f5f9; color: #334155;
+  border-bottom-left-radius: 2px; border: 1px solid #e2e8f0;
+}
+
+/* Cabeçalhos e Tipografia dentro dos balões */
+.bubble-header {
+  font-size: 12px; font-weight: bold; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 5px; opacity: 0.8;
+}
+.ai-bubble .bubble-header { color: #8b5cf6; }
+.user-bubble .bubble-header { color: #e0f2fe; }
+.ai-bubble h2, .ai-bubble h3, .ai-bubble h4 { margin-top: 15px; margin-bottom: 10px; font-weight: bold; font-size: 1.1em; }
+.ai-bubble ul, .ai-bubble ol { padding-left: 20px; margin-bottom: 10px; }
+.ai-bubble li { margin-bottom: 5px; }
+.ai-bubble p:last-child { margin-bottom: 0; }
+
+/* Animação: IA Digitando */
+@keyframes bounceDot {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1.0); }
+}
+
+.ai-typing-indicator {
+  display: flex; align-items: center; gap: 4px;
+  padding: 8px 12px; background: #f1f5f9;
+  border-radius: 12px; width: fit-content;
+}
+.typing-dot {
+  width: 6px; height: 6px; background: #004a8d;
+  border-radius: 50%; animation: bounceDot 1.4s infinite ease-in-out both;
+}
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+
+/* --------------------------------------------------------------------------
+   8. MODAL FULLSCREEN (ZOOM & LUPA)
+   -------------------------------------------------------------------------- */
+#modalPdfPreview {
+  display: none; position: fixed !important;
+  top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important;
+  background: rgba(15, 23, 42, 0.95) !important; z-index: 10000 !important; 
+  align-items: center; justify-content: center;
+}
+#modalPdfPreview.show { display: flex !important; }
+
+#modalPdfPreview .modal-body {
+  position: relative; display: flex; align-items: center; justify-content: center;
+  width: 100%; height: 100%;
+}
+
+.pdf-modal-close-btn {
+  position: absolute; top: 20px; right: 20px;
+  background: white; border: none; border-radius: 50%;
+  width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 10010; color: #333;
+}
+.pdf-modal-close-btn:hover { background: #f1f5f9; transform: scale(1.05); }
+
+#img-large-preview {
+  max-width: 95vw; max-height: 95vh; object-fit: contain;
+  border-radius: 4px; box-shadow: 0 0 50px rgba(0,0,0,0.6); background: white;
+}
+
+#lupa-zoom {
+  position: fixed; width: 250px; height: 250px;
+  border: 3px solid #4f46e5; border-radius: 50%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6); pointer-events: none;
+  display: none; background-repeat: no-repeat; background-color: white;
+  z-index: 1060; transform: translate(-50%, -50%);
+}
+
+/* ==========================================================================
+   NAVEGADOR DE ZOOM (PILL)
+   ========================================================================== */
+.zoom-nav-pill {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 50px;
+  padding: 6px 16px;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-zoom-nav {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.btn-zoom-nav:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+
+.btn-zoom-nav:active {
+  transform: scale(0.9);
+}
+
+.btn-zoom-nav .material-icons {
+  font-size: 28px;
+}
+
+.zoom-page-indicator {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  user-select: none;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* ==========================================================================
+   CONTROLES DE WORKSPACE (ORDENAR & LISTA)
+   ========================================================================== */
+.view-toggle-group {
+  display: flex;
+  background: #e2e8f0;
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.view-toggle-btn {
+  border: none;
+  background: transparent;
+  padding: 4px 12px;
+  border-radius: 6px;
+  color: #64748b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.view-toggle-btn.active {
+  background: white;
+  color: #0f172a;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* --- MÁGICA DO MODO LISTA --- */
+.pdf-preview-container.view-mode-list {
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  padding: 20px !important;
+  gap: 12px !important;
+}
+
+/* Transforma o card numa barra horizontal */
+.view-mode-list .pdf-page-wrapper {
+  width: 100% !important;
+  flex-direction: row !important;
+  background: white !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 8px !important;
+  padding: 10px 15px !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+}
+
+.view-mode-list .pdf-page-wrapper:hover {
+  transform: translateX(4px) !important;
+}
+
+/* Liberta o Canvas e remove sombras */
+.view-mode-list .pdf-canvas-container {
+  position: static !important; 
+  width: 45px !important;
+  height: 65px !important;
+  min-height: unset !important;
+  margin-right: 15px !important;
+  flex-shrink: 0 !important;
+  box-shadow: none !important;
+  border: 1px solid #e2e8f0 !important;
+  overflow: visible !important;
+}
+
+/* Alinha o texto e cria um escudo contra os botões */
+.view-mode-list .pdf-page-number {
+  padding-right: 200px !important; 
+  text-overflow: ellipsis !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  margin-top: 0 !important;
+  text-align: left !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  flex-grow: 1 !important;
+  font-size: 14px !important;
+}
+
+/* =========================================
+   O DESTRUIDOR DO FANTASMA AZUL
+   ========================================= */
+.view-mode-list .pdf-page-actions {
+  position: absolute !important;
+  right: 15px !important;
+  top: 50% !important;
+  left: auto !important;
+  bottom: auto !important;
+  transform: translateY(-50%) !important;
+  width: auto !important;
+  height: auto !important;
+  
+  /* Mata completamente o background e o blur */
+  background: none !important;
+  background-color: transparent !important;
+  backdrop-filter: blur(0px) !important;
+  -webkit-backdrop-filter: blur(0px) !important;
+  box-shadow: none !important;
+  border: none !important;
+  
+  opacity: 1 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 8px !important;
+  z-index: 100 !important;
+  padding: 0 !important;
+}
+
+/* =========================================
+   FORÇA O VISUAL CLARO DOS BOTÕES
+   ========================================= */
+.view-mode-list .pdf-action-btn {
+  width: 32px !important;
+  height: 32px !important;
+  margin: 0 !important;
+  background: #f8fafc !important; /* Fundo cinza bem clarinho */
+  background-color: #f8fafc !important;
+  border: 1px solid #cbd5e1 !important; /* Borda visível */
+  border-radius: 6px !important;
+  transform: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.view-mode-list .pdf-action-btn i {
+  color: #475569 !important; /* Ícone escuro */
+  font-size: 18px !important;
+}
+
+/* Hover dos Botões Padrões */
+.view-mode-list .pdf-action-btn:hover {
+  background: #e2e8f0 !important;
+  background-color: #e2e8f0 !important;
+}
+.view-mode-list .pdf-action-btn:hover i {
+  color: #0f172a !important;
+}
+
+/* Hover do Botão de Deletar (Lixeira) */
+.view-mode-list .pdf-action-btn.delete:hover {
+  background: #ef4444 !important;
+  background-color: #ef4444 !important;
+  border-color: #ef4444 !important;
+}
+.view-mode-list .pdf-action-btn.delete:hover i {
+  color: white !important;
+}
+
+/* Checkbox do Modo Extrair */
+.view-mode-list .pdf-extract-check { 
+  position: static !important; 
+  margin-right: 15px !important; 
+}
+
+/* Esconde marca d'água no modo lista */
+.view-mode-list .wm-overlay {
+  display: none !important;
+}
+
+/* =========================================
+   CORREÇÃO DO DESLOCAMENTO (BUG DO HOVER)
+   ========================================= */
+/* Mata o 'pulinho' da miniatura que sugava os botões para a esquerda */
+.view-mode-list .pdf-page-wrapper:hover .pdf-canvas-container {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Garante que a sombra hover fique apenas na barra inteira, e não na miniatura */
+.view-mode-list .pdf-page-wrapper:hover {
+  transform: translateX(4px) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
+  border-color: #94a3b8 !important;
+}
+
+/* ==========================================================================
+   FERRAMENTA: CABEÇALHO E RODAPÉ (EDITOR HTML)
+   ========================================================================== */
+.header_footer-mode { background-color: #475569 !important; }
+
+.hf-editor-container { 
+  background: #ffffff; 
+  border: 1px solid #cbd5e1; 
+  border-radius: 8px; 
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.hf-toolbar { 
+  background: #f8fafc; 
+  border-bottom: 1px solid #e2e8f0; 
+  padding: 6px; 
+  display: flex; 
+  gap: 4px; 
+  align-items: center; 
+  flex-wrap: wrap;
+}
+
+.hf-toolbar .btn { 
+  height: 28px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  padding: 0 8px;
+  color: #475569;
+}
+.hf-toolbar .btn:hover { background: #e2e8f0; color: #0f172a; }
+
+#hf-editor {
+  min-height: 80px; 
+  max-height: 150px; 
+  overflow-y: auto; 
+  padding: 12px; 
+  outline: none; 
+  font-family: Arial, sans-serif;
+}
+
+#hf-editor img { 
+  max-width: 100px; /* Limita o tamanho de logos inseridas */
+  height: auto; 
+}
+
+/* ==========================================================================
+   QUIZ INTERATIVO (MODO MAKE MONEY)
+   ========================================================================== */
+.quiz-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.quiz-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-question-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.quiz-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quiz-option {
+  padding: 12px 16px;
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 500;
+  color: #475569;
+}
+
+.quiz-option:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+/* Estados de Resposta (Interatividade) */
+.quiz-option.selected-wrong {
+  background: #fef2f2;
+  border-color: #ef4444;
+  color: #b91c1c;
+}
+.quiz-option.selected-correct, .quiz-option.show-correct {
+  background: #f0fdf4;
+  border-color: #22c55e;
+  color: #15803d;
+}
+
+.quiz-feedback {
+  margin-top: 16px;
+  padding: 16px;
+  background: #eff6ff;
+  border-left: 4px solid #3b82f6;
+  border-radius: 4px 8px 8px 4px;
+  display: none; /* Escondido até o usuário responder */
+  animation: popIn 0.3s ease-out;
+}
+
+.quiz-feedback-title {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: #1d4ed8;
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+}
+
+/* --- ANIMAÇÕES E ESTILOS DO LEITOR DE VOZ (TTS) --- */
+@keyframes popIn {
+  0% { transform: scale(0.5); opacity: 0; }
+  70% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Classe aplicada via JS quando o áudio está tocando */
+.tts-playing {
+  background-color: #eef2ff !important;
+  color: #4f46e5 !important;
+  border-color: #4f46e5 !important;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+  transition: all 0.2s ease;
+}
+
+/* ==========================================================================
+   LEITOR IMERSIVO DE PDF (TELEPROMPTER / KARAOKE)
+   ========================================================================== */
+.leitura-palavra {
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.1s ease, color 0.1s ease;
+  padding: 0 2px;
+}
+.leitura-palavra:hover {
+  background-color: #e2e8f0;
+  text-decoration: underline;
+}
+.palavra-lida {
+  color: #94a3b8 !important; /* Cinza claro impositivo para o que já passou */
+  background-color: transparent !important;
+}
+.palavra-lendo {
+  background-color: #fef08a !important; /* Amarelo brilhante impositivo */
+  color: #0f172a !important;
+  font-weight: 700;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transform: scale(1.05);
+  display: inline-block;
+  border-radius: 4px;
+}
+#modal-leitor-imersivo {
+  z-index: 10700;
+  backdrop-filter: blur(10px);
+}
+
+</style>
