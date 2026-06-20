@@ -1,0 +1,416 @@
+<div id="pdf-hub-view" class="pdf-hub-container">
+  <div class="text-center mb-5">
+    <h2 class="fw-bold" style="color: var(--primary-dark);">Todas as ferramentas PDF</h2>
+    <p class="text-muted">Selecione a ação desejada. O processamento é rápido, local e seguro.</p>
+  </div>
+
+  <div class="pdf-tools-grid">
+
+    <div class="pdf-tool-card ai-tool-card" onclick="openTool('quiz_generator')">
+      <div class="icon-box" style="background-color: #ecfdf5; color: #16a34a;">
+        <i class="material-icons ai-sparkle">quiz</i>
+      </div>
+      <div class="tool-info">
+        <h5>Questões com IA</h5>
+        <p>Crie provas e testes de múltipla escolha com gabarito automaticamente.</p>
+      </div>
+    </div>
+
+    <div class="pdf-tool-card ai-tool-card" onclick="openTool('mindmap')">
+      <div class="icon-box" style="background-color: #fff1f2; color: #e11d48;">
+        <i class="material-icons ai-sparkle">account_tree</i>
+      </div>
+      <div class="tool-info">
+        <h5>Mapa Mental IA</h5>
+        <p>Transforme textos longos em diagramas visuais interativos.</p>
+      </div>
+    </div>
+
+    <div class="pdf-tool-card ai-tool-card" onclick="openTool('summarize')">
+      <div class="icon-box" style="background-color: #ede9fe; color: #8b5cf6;">
+        <i class="material-icons ai-sparkle">auto_awesome</i>
+      </div>
+      <div class="tool-info">
+        <h5>Resumir com IA</h5>
+        <p>Extraia os pontos principais, gere tópicos ou resuma documentos inteiros usando IA.</p>
+      </div>
+    </div>
+
+    <div class="pdf-tool-card ai-tool-card" onclick="openTool('translate')">
+      <div class="icon-box" style="background-color: #fce7f3; color: #d946ef;">
+        <i class="material-icons ai-sparkle">translate</i>
+      </div>
+      <div class="tool-info">
+        <h5>Traduzir com IA</h5>
+        <p>Traduza o texto das páginas mantendo o contexto perfeito com fluência nativa.</p>
+      </div>
+    </div>
+
+    <div class="pdf-tool-card ai-tool-card" onclick="openTool('chat')">
+      <div class="icon-box" style="background-color: #e0f2fe; color: #0284c7;">
+        <i class="material-icons ai-sparkle">forum</i>
+      </div>
+      <div class="tool-info">
+        <h5>Chat IA com PDF</h5>
+        <p>Faça perguntas diretas e deixe a IA encontrar as respostas precisas no documento.</p>
+      </div>
+    </div>
+
+    <div class="pdf-tool-card new-tool-card" onclick="openTool('header_footer')">
+      <div class="icon-box" style="background-color: #f1f5f9; color: #334155;">
+        <i class="material-icons">view_day</i>
+      </div>
+      <div class="tool-info">
+        <h5>Cabeçalho e Rodapé</h5>
+        <p>Adicione textos formatados, logos e timbres em todas as páginas.</p>
+      </div>
+    </div>
+
+    <div class="pdf-tool-card new-tool-card" onclick="openTool('read_pdf')">
+      <div class="icon-box" style="background-color: #d1fae5; color: #059669;">
+        <i class="material-icons">record_voice_over</i>
+      </div>
+      <div class="tool-info">
+        <h5>Ler PDF em Voz Alta</h5>
+        <p>Ouça seus documentos, provas e textos com voz natural e controles de reprodução.</p>
+      </div>
+    </div>
+
+    <div class="pdf-tool-card new-tool-card" onclick="openTool('pdf_stats')">
+      <div class="icon-box" style="background-color: #cff4fc; color: #055160;">
+        <i class="material-icons">analytics</i>
+      </div>
+      <div class="tool-info">
+        <h5>Estatísticas do PDF</h5>
+        <p>Contagem detalhada de palavras, caracteres, linhas e parágrafos por página.</p>
+      </div>
+    </div>
+
+    <div class="pdf-tool-card new-tool-card" onclick="openTool('remove_blank')">
+      <div class="icon-box" style="background-color: #f8d7da; color: #842029;">
+        <i class="material-icons">cleaning_services</i>
+      </div>
+      <div class="tool-info">
+        <h5>Remover Páginas em Branco</h5>
+        <p>Faxina automática que exclui páginas escaneadas sem nenhum conteúdo legível.</p>
+      </div>
+    </div>
+
+    <div class="pdf-tool-card new-tool-card" onclick="openTool('flatten')">
+      <div class="icon-box" style="background-color: #fff3cd; color: #664d03;">
+        <i class="material-icons">layers</i>
+      </div>
+      <div class="tool-info">
+        <h5>Achatar PDF (Flatten)</h5>
+        <p>Fixe formulários preenchidos e anotações, transformando-os em elementos permanentes.</p>
+      </div>
+    </div>
+
+    <div class="pdf-tool-card new-tool-card" onclick="openTool('overlay')">
+      <div class="icon-box" style="background-color: #cfe2ff; color: #084298;">
+        <i class="material-icons">dynamic_feed</i>
+      </div>
+      <div class="tool-info">
+        <h5>Sobrepor (Timbre)</h5>
+        <p>Aplique um PDF de fundo (papel timbrado oficial) atrás de todas as páginas do documento.</p>
+      </div>
+    </div>
+
+    <div class="pdf-tool-card" onclick="openTool('merge')">
+      <div class="icon-box bg-danger-light text-danger"><i class="material-icons">merge_type</i></div>
+      <div class="tool-info"><h5>Juntar PDF</h5><p>Mescle vários PDFs e organize-os na ordem que desejar.</p></div>
+    </div>
+
+    <div class="pdf-tool-card" onclick="openTool('split')">
+      <div class="icon-box bg-warning-light text-warning"><i class="material-icons">content_cut</i></div>
+      <div class="tool-info"><h5>Dividir PDF</h5><p>Separe uma página ou um conjunto inteiro para conversão.</p></div>
+    </div>
+
+    <div class="pdf-tool-card" onclick="openTool('extract')">
+      <div class="icon-box bg-success-light text-success"><i class="material-icons">library_add_check</i></div>
+      <div class="tool-info"><h5>Extrair & Organizar</h5><p>Selecione páginas específicas, exclua ou reordene o documento.</p></div>
+    </div>
+
+    <div class="pdf-tool-card" onclick="openTool('convert')">
+      <div class="icon-box bg-info-light text-info"><i class="material-icons">transform</i></div>
+      <div class="tool-info"><h5>Conversor Universal</h5><p>Converta PDF para Office/Imagens ou vice-versa na nuvem.</p></div>
+    </div>
+    
+    <div class="pdf-tool-card" onclick="openTool('protect')">
+      <div class="icon-box bg-purple-light text-purple"><i class="material-icons">lock</i></div>
+      <div class="tool-info"><h5>Proteger PDF</h5><p>Adicione uma senha para criptografar e proteger seu documento.</p></div>
+    </div>
+  
+    <div class="pdf-tool-card" onclick="openTool('repair')">
+      <div class="icon-box bg-orange-light text-orange"><i class="material-icons">build</i></div>
+      <div class="tool-info"><h5>Reparar PDF</h5><p>Corrija arquivos corrompidos e recupere dados perdidos.</p></div>
+    </div>
+
+    <div class="pdf-tool-card" onclick="openTool('paginate')">
+      <div class="icon-box bg-navy-light text-navy"><i class="material-icons">format_list_numbered</i></div>
+      <div class="tool-info"><h5>Numerar Páginas</h5><p>Adicione numeração automática em qualquer posição do documento.</p></div>
+    </div>
+
+    <div class="pdf-tool-card" onclick="openTool('watermark')">
+      <div class="icon-box bg-teal-light text-teal"><i class="material-icons">layers</i></div>
+      <div class="tool-info"><h5>Marca d'água</h5><p>Insira textos ou imagens de fundo para proteger ou identificar.</p></div>
+    </div>
+
+    <div class="pdf-tool-card" onclick="openTool('redact')">
+      <div class="icon-box bg-slate-light text-slate"><i class="material-icons">visibility_off</i></div>
+      <div class="tool-info"><h5>Ocultar (Redigir)</h5><p>Remova permanentemente dados sensíveis com faixas pretas.</p></div>
+    </div>
+
+    <div class="pdf-tool-card" onclick="openTool('ocr')">
+      <div class="icon-box bg-pink-light text-pink"><i class="material-icons">text_fields</i></div>
+      <div class="tool-info"><h5>OCR PDF</h5><p>Transforme imagens e digitalizações em texto pesquisável.</p></div>
+    </div>
+
+    <div class="pdf-tool-card" onclick="openTool('compress')">
+      <div class="icon-box" style="background-color: #ecfccb; color: #65a30d;"><i class="material-icons">compress</i></div>
+      <div class="tool-info"><h5>Comprimir PDF</h5><p>Reduza o peso do arquivo mantendo a qualidade visual.</p></div>
+    </div>
+
+    <div class="pdf-tool-card" onclick="openTool('sign')">
+      <div class="icon-box" style="background-color: #dbeafe; color: #2563eb;"><i class="material-icons">draw</i></div>
+      <div class="tool-info"><h5>Assinar PDF</h5><p>Crie, desenhe e aplique sua assinatura digital no documento.</p></div>
+    </div>
+
+    <div class="pdf-tool-card" onclick="openTool('grayscale')">
+      <div class="icon-box" style="background-color: #e4e4e7; color: #52525b;"><i class="material-icons">monochrome_photos</i></div>
+      <div class="tool-info"><h5>Tons de Cinza</h5><p>Converta todas as cores do documento para escala de cinza.</p></div>
+    </div>
+
+    <div class="pdf-tool-card" onclick="openTool('metadata')">
+      <div class="icon-box" style="background-color: #f5f5f4; color: #57534e;"><i class="material-icons">info</i></div>
+      <div class="tool-info"><h5>Editar Metadados</h5><p>Altere autor, título, assunto e dados ocultos do arquivo.</p></div>
+    </div>
+
+    <div class="pdf-tool-card" onclick="openTool('extract_images')">
+      <div class="icon-box" style="background-color: #fef08a; color: #ca8a04;"><i class="material-icons">image</i></div>
+      <div class="tool-info"><h5>Extrair Imagens</h5><p>Retire e salve apenas as fotos de dentro do documento.</p></div>
+    </div>
+
+    <div class="pdf-tool-card" onclick="openTool('crop')">
+      <div class="icon-box" style="background-color: #ffe4e6; color: #e11d48;"><i class="material-icons">crop</i></div>
+      <div class="tool-info"><h5>Recortar PDF</h5><p>Selecione uma área para manter e remova as margens do documento.</p></div>
+    </div>
+
+    <div class="pdf-tool-card" onclick="openTool('n_up')">
+      <div class="icon-box" style="background-color: #cffafe; color: #0891b2;"><i class="material-icons">grid_view</i></div>
+      <div class="tool-info"><h5>Páginas por Folha</h5><p>Agrupe múltiplas páginas (2, 4, 8) em uma única folha para impressão.</p></div>
+    </div>
+
+  </div>
+</div>
+
+<div id="pdf-studio-view" style="display: none;">
+  
+  <div class="pdf-toolbar">
+    <div class="pdf-toolbar-main">
+      
+      <div class="d-flex align-items-center">
+        <button class="btn btn-sm btn-light rounded-pill border me-3" onclick="voltarAoHubSeguro()" title="Voltar ao Início">
+          <i class="material-icons fs-6">arrow_back</i>
+        </button>
+        <h5 class="fw-bold m-0 text-primary d-flex align-items-center" style="font-size:15px; white-space: nowrap;">
+          <i id="studio-active-icon" class="material-icons me-2">auto_awesome</i>
+          <span id="studio-active-title">Estúdio PDF</span>
+        </h5>
+      </div>
+
+      <div class="d-flex align-items-center gap-2 mx-auto">
+        <button class="btn btn-sm btn-light rounded-pill me-1 btn-undo" onclick="undo()" title="Desfazer (Ctrl+Z)"><i class="material-icons fs-6">undo</i></button>
+        <button class="btn btn-sm btn-light rounded-pill me-2 btn-redo" onclick="redo()" title="Refazer (Ctrl+Y)"><i class="material-icons fs-6">redo</i></button>
+
+        <button class="btn btn-sm btn-primary rounded-pill btn-add-pdf" onclick="document.getElementById('pdf-add-input').click()" title="Adicionar PDF">
+          <i class="material-icons fs-6">add</i>
+        </button>
+        <input type="file" id="pdf-add-input" multiple accept=".pdf,.docx,.doc,.jpg,.jpeg,.png,.xlsx,.pptx" style="display:none;" onchange="loadPdfs(this.files)">
+
+        <div class="vr mx-1"></div>
+
+        <button class="btn btn-sm btn-outline-secondary rounded-pill btn-rotate" onclick="globalRotate(-90)" title="Girar Esquerda"><i class="material-icons fs-6">rotate_left</i></button>
+        <button class="btn btn-sm btn-outline-secondary rounded-pill btn-rotate" onclick="globalRotate(90)" title="Girar Direita"><i class="material-icons fs-6">rotate_right</i></button>
+        <button class="btn btn-sm btn-outline-secondary rounded-pill btn-add-blank" onclick="addBlankPage()" title="Página em Branco"><i class="material-icons fs-6">note_add</i></button>
+        
+        <div class="vr mx-1"></div>
+        
+        <div class="d-flex align-items-center btn-zoom" title="Tamanho das Páginas" style="width: 100px;">
+          <i class="material-icons text-secondary" style="font-size: 16px;">zoom_out</i>
+          <input type="range" id="zoom-slider" class="form-range mx-1" min="100" max="300" step="10" value="160">
+          <i class="material-icons text-secondary" style="font-size: 16px;">zoom_in</i>
+        </div>
+
+        <div class="vr mx-1"></div>
+        <button id="btn-ouvir-mesa" class="btn btn-sm btn-outline-primary rounded-pill me-2" style="display: none;" onclick="lerTextoDaMesa(this)" title="Ouvir páginas escaneadas">
+  <i class="material-icons fs-6">volume_up</i>
+</button>
+<div class="vr mx-1"></div>
+        
+        <button class="btn btn-sm btn-outline-warning rounded-pill me-1 btn-delete-selected" onclick="excluirPaginasSelecionadas()" title="Excluir selecionados (Delete)">
+          <i class="material-icons fs-6">delete</i>
+        </button>
+        
+        <button class="btn btn-sm btn-outline-danger rounded-pill btn-clear-desk" onclick="limparEstudio()" title="Remover tudo">
+          <i class="material-icons fs-6">delete_sweep</i>
+        </button>
+      </div>
+
+      <div class="d-flex align-items-center gap-2">
+        <button id="btn-resumir-conversa" class="btn rounded-pill fw-bold px-4 shadow-sm" style="display: none; background: #8b5cf6; color: white; border: none;" onclick="abrirModalResumo()">
+          <i class="material-icons align-middle fs-6 me-1">summarize</i> Resumir
+        </button>
+
+        <button id="btn-finalizar" class="btn btn-action rounded-pill fw-bold px-4 shadow-sm" onclick="processarPdfFinal()">
+          <i class="material-icons align-middle fs-6 me-1">download</i> 
+          <span id="btn-text">Executar</span>
+        </button>
+      </div>
+
+    </div>
+
+    <div id="pdf-context-submenu" class="pdf-toolbar-sub d-flex align-items-center gap-3 w-100"></div>
+  </div>
+
+  <div id="bulk-action-bar" class="bulk-action-bar" style="display: none;">
+    <span id="bulk-selection-count" class="me-3 fw-bold text-white">0 selecionadas</span>
+    <div class="d-flex gap-2">
+      <button class="btn btn-sm btn-light" onclick="executarAcaoEmLote('extract')">✂️ Extrair</button>
+      <button class="btn btn-sm btn-light" onclick="executarAcaoEmLote('delete')">🗑️ Excluir</button>
+      <button class="btn btn-sm btn-light" onclick="executarAcaoEmLote('paginate')">#️⃣ Numerar</button>
+      <button class="btn btn-sm btn-light" onclick="executarAcaoEmLote('watermark')">💧 Marca d'água</button>
+      <button class="btn btn-sm btn-warning" onclick="executarAcaoEmLote('redact')">🕶️ Ocultar</button>
+      <button class="btn btn-sm btn-danger" onclick="executarAcaoEmLote('ocr')">🔍 OCR</button>
+    </div>
+  </div>
+
+  <div id="workspace-controls-bar" class="w-100" style="display: none; max-width: 1400px; margin: 0 auto 10px auto;">
+    <div class="d-flex align-items-center justify-content-between px-3">
+      
+      <div class="d-flex align-items-center gap-3">
+        <button class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1 fw-bold bg-white shadow-sm" onclick="sortMesaAZ()" style="border-color: #cbd5e1;">
+          <i class="material-icons" style="font-size: 18px;">sort_by_alpha</i> Ordenar A-Z
+        </button>
+        <span class="text-muted small d-none d-md-inline">Organiza pelo nome original</span>
+      </div>
+
+      <div class="view-toggle-group shadow-sm">
+        <button id="btn-view-grid" class="view-toggle-btn active" onclick="mudarVisualizacao('grid')" title="Grade">
+          <i class="material-icons" style="font-size: 20px;">grid_view</i>
+        </button>
+        <button id="btn-view-list" class="view-toggle-btn" onclick="mudarVisualizacao('list')" title="Lista">
+          <i class="material-icons" style="font-size: 20px;">view_list</i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="pdf-preview-area" class="pdf-preview-container shadow-sm">
+    <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center text-muted">
+      <i class="material-icons empty-state-icon" style="font-size: 80px;">post_add</i>
+      <h4 class="mt-3 fw-bold text-secondary">Solte ou adicione seus arquivos aqui</h4>
+      <p class="opacity-75">Suporta PDF, Word e Imagens.</p>
+    </div>
+  </div>
+</div>
+
+<div id="chat-workspace" class="d-none" style="display: flex; height: calc(100vh - 140px); background: #f8fafc; overflow: hidden; border-top: 1px solid #e2e8f0;">
+  
+  <div id="chat-sidebar" style="width: 220px; background: #e2e8f0; overflow-y: auto; padding: 15px; border-right: 1px solid #cbd5e1; display: flex; flex-direction: column; gap: 15px;">
+    </div>
+
+  <div style="flex: 1; display: flex; flex-direction: column; background: #fff; position: relative;">
+    <div id="chat-history" style="flex: 1; overflow-y: auto; padding: 30px; display: flex; flex-direction: column; gap: 20px;">
+      </div>
+
+    <div style="padding: 20px; background: #f8fafc; border-top: 1px solid #e2e8f0;">
+      <div class="input-group shadow-sm" style="border-radius: 8px; overflow: hidden;">
+        <input type="text" id="chat-input" class="form-control border-0 p-3" placeholder="Digite sua pergunta (Ex: Qual o valor total da nota?)" onkeypress="if(event.key === 'Enter') enviarMensagemChat()">
+        <button class="btn border-0 px-4" style="background: #0284c7; color: white;" onclick="enviarMensagemChat()">
+          <i class="material-icons" style="vertical-align: middle;">send</i>
+        </button>
+      </div>
+      <div class="text-center mt-2" style="font-size: 11px; color: #94a3b8;">
+        A IA pode cometer erros. Considere verificar as informações importantes no próprio documento.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalResumoConversa" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-light border-0">
+        <h5 class="modal-title fw-bold text-dark"><i class="material-icons align-middle me-1 text-primary">summarize</i> Resumir Sessão</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <div class="border rounded p-3 bg-white shadow-sm mb-4" id="area-texto-resumo" style="max-height: 200px; overflow-y: auto;">
+          <span class="text-muted small">O resumo será gerado e aparecerá aqui...</span>
+        </div>
+        <div class="d-grid gap-2">
+          <button class="btn btn-outline-primary" onclick="CopiarTextoResumo()"><i class="material-icons align-middle fs-6 me-1">content_copy</i> Copiar Resumo</button>
+          <button class="btn btn-outline-danger" onclick="ExportarResumoPDF()"><i class="material-icons align-middle fs-6 me-1">picture_as_pdf</i> Salvar apenas o Resumo em PDF</button>
+          <button class="btn btn-secondary" onclick="ExportarConversaCompletaPDF()"><i class="material-icons align-middle fs-6 me-1">forum</i> Salvar Conversa Completa em PDF</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalAvisoSaidaChat" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-warning">
+      <div class="modal-header text-dark" style="background-color: #fef08a;">
+        <h5 class="modal-title fw-bold d-flex align-items-center gap-2"><i class="material-icons text-warning">warning</i> Atenção: Mesa Ativa</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Você possui arquivos ou histórico de conversas ativos na sua mesa de trabalho. Se sair agora, todos os dados dessa sessão de chat serão perdidos de forma permanente.
+      </div>
+      <div class="modal-footer bg-light justify-content-between border-0">
+        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="ExportarConversaCompletaPDF()">Salvar Conversa</button>
+        <div class="d-flex gap-2">
+          <button type="button" class="btn btn-light text-muted btn-sm" data-bs-dismiss="modal">Ficar</button>
+          <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal" onclick="setTimeout(() => fecharTudoEVoltar(), 300)">Sair mesmo assim</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modalPdfPreview" class="position-fixed top-0 start-0 w-100 h-100" style="z-index: 1060; background: rgba(0,0,0,0.85); overflow: auto; display: none;" aria-hidden="true">
+  
+  <button type="button" class="btn btn-light position-fixed top-0 end-0 m-3 rounded-circle shadow" style="z-index: 1061;" onclick="document.getElementById('modalPdfPreview').classList.remove('show'); document.getElementById('modalPdfPreview').classList.add('d-none'); document.getElementById('modalPdfPreview').style.display = 'none';" title="Fechar Visualização">
+    <i class="material-icons align-middle">close</i>
+  </button>
+  
+  <div class="w-100 h-100 d-flex align-items-center justify-content-center p-4">
+    <div class="position-relative">
+      <img id="img-large-preview" src="" alt="Preview" class="img-fluid bg-white rounded shadow-lg" style="max-height: 85vh;">
+      <div id="lupa-zoom" class="d-none"></div>
+    </div>
+  </div>
+
+  <div class="zoom-nav-pill position-fixed bottom-0 start-50 translate-middle-x mb-4 d-flex align-items-center shadow-lg" style="z-index: 1061;">
+    <button class="btn-zoom-nav" onclick="navegarZoom(-1, event)" title="Página Anterior (Seta Esquerda)">
+      <i class="material-icons">chevron_left</i>
+    </button>
+    
+    <div class="zoom-page-indicator mx-3">
+      <span id="zoom-current-page">1</span> de <span id="zoom-total-pages">1</span>
+    </div>
+    
+    <button class="btn-zoom-nav" onclick="navegarZoom(1, event)" title="Próxima Página (Seta Direita)">
+      <i class="material-icons">chevron_right</i>
+    </button>
+  </div>
+</div>
+
+<div id="pdf-global-loader" class="position-fixed top-0 start-0 w-100 h-100 flex-column align-items-center justify-content-center" style="display: none; z-index: 9999; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(4px);">
+  <div class="spinner-border text-light mb-3" style="width: 3.5rem; height: 3.5rem;" role="status"></div>
+  <h3 class="fw-bold m-0 text-white">Processando Documento...</h3>
+  <p id="pdf-global-loader-sub" class="mt-2 text-white-50">Isso pode levar alguns segundos dependendo do tamanho do arquivo.</p>
+</div>
