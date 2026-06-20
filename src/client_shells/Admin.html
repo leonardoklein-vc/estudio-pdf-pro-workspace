@@ -1,0 +1,131 @@
+  <!DOCTYPE html>
+  <html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <title>Painel de Monitorização - SAMIS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+      body { background-color: #f8fafc; font-family: system-ui, sans-serif; }
+      .admin-header {
+        height: 70px;
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        color: white;
+        display: flex;
+        align-items: center;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      }
+      .card-monitor {
+        background: white;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+        padding: 24px;
+      }
+      .status-dot {
+        width: 10px;
+        height: 10px;
+        background-color: #10b981;
+        border-radius: 50%;
+        display: inline-block;
+        animation: blink 1.5s infinite;
+      }
+      @keyframes blink {
+        0% { opacity: 0.4; }
+        50% { opacity: 1; }
+        100% { opacity: 0.4; }
+      }
+      .table-user th { color: #64748b; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05rem; }
+      .badge-tool { background-color: #e2e8f0; color: #334155; font-weight: 600; font-size: 0.75rem; padding: 6px 12px; border-radius: 6px; }
+    </style>
+  </head>
+  <body>
+
+    <header class="admin-header px-4">
+      <div class="d-flex align-items-center gap-2">
+        <i class="material-icons text-info">monitoring</i>
+        <h1 class="h5 m-0 fw-bold">Torre de Controlo Geral</h1>
+        <span class="badge bg-secondary ms-2">SAMIS • Real-Time</span>
+      </div>
+    </header>
+
+    <div class="container py-5">
+      <div class="row mb-4">
+        <div class="col-12 col-md-4">
+          <div class="card-monitor d-flex align-items-center justify-content-between">
+            <div>
+              <h6 class="text-muted small text-uppercase fw-bold mb-1">Acessos Ativos</h6>
+              <h2 class="fw-bold m-0 text-slate" id="total-online">0</h2>
+            </div>
+            <div class="p-3 bg-light rounded-circle"><i class="material-icons text-primary fs-2">group</i></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-monitor">
+        <h5 class="fw-bold text-slate mb-4 d-flex align-items-center gap-2">
+          <span class="status-dot"></span> Utilizadores Ativos na Ferramenta
+        </h5>
+        
+        <div class="table-responsive">
+          <table class="table table-user align-middle mb-0">
+            <thead>
+              <tr>
+                <th>Identificação do Utilizador</th>
+                <th>Módulo em Utilização</th>
+                <th class="text-end">Último Batimento (Sinal)</th>
+              </tr>
+            </thead>
+            <tbody id="tabela-corpo">
+              <tr>
+                <td colspan="3" class="text-center text-muted py-4">A carregar dados de atividade...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function atualizarPainel() {
+        if (typeof google !== 'undefined' && google.script) {
+          google.script.run
+            .withSuccessHandler(function(resposta) {
+              if (resposta.success) {
+                montarTabela(resposta.dados);
+              }
+            })
+            .obterUtilizadoresOnline();
+      }
+      }
+
+      function montarTabela(utilizadores) {
+        const corpo = document.getElementById('tabela-corpo');
+        const totalCounter = document.getElementById('total-online');
+        
+        totalCounter.innerText = utilizadores.length;
+        
+        if (utilizadores.length === 0) {
+          corpo.innerHTML = `<tr><td colspan="3" class="text-center text-muted py-4">Nenhum utilizador ativo de momento.</td></tr>`;
+          return;
+        }
+        
+        corpo.innerHTML = utilizadores.map(u => `
+          <tr>
+            <td class="fw-semibold text-dark">
+              <div class="d-flex align-items-center gap-2">
+                <i class="material-icons text-secondary fs-5">account_circle</i> ${u.email}
+              </div>
+            </td>
+            <td><span class="badge badge-tool text-uppercase">${u.ferramenta}</span></td>
+            <td class="text-end text-muted font-monospace">${u.ultimoPing}</td>
+          </tr>
+        `).join('');
+      }
+
+      // Executa a primeira atualização e agenda repetições a cada 10 segundos
+      atualizarPainel();
+      setInterval(atualizarPainel, 10000);
+    </script>
+  </body>
+  </html>
