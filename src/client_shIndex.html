@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <base target="_top">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="icon" type="image/jpeg" href="https://i.postimg.cc/d0jVnNbH/0001.jpg">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  
+  <style>
+    /* Trava o body para evitar rolagem dupla no navegador */
+    body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #f8fafc; }
+    
+    /* =========================================================
+       HEADER ANIMADO E MODERNO
+       ========================================================= */
+    .pdf-header {
+      height: 65px;
+      /* Gradiente com 4 tons de azul/roxo institucional */
+      background: linear-gradient(-45deg, #004a8d, #0066c1, #003b73, #00529b);
+      background-size: 400% 400%;
+      animation: gradientFlow 12s ease infinite;
+      box-shadow: 0 4px 15px rgba(0, 74, 141, 0.2);
+      display: flex;
+      align-items: center;
+      z-index: 1050;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .logo-circle {
+      width: 38px;
+      height: 38px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(5px);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,0.25);
+      box-shadow: inset 0 0 10px rgba(255,255,255,0.1);
+    }
+
+    /* Badge "Em fase de teste" com efeito de pulso */
+    .badge-testing {
+      background: rgba(245, 158, 11, 0.15);
+      padding: 6px 14px;
+      border-radius: 20px;
+      color: #fbbf24;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      animation: pulseWarning 2s infinite;
+    }
+
+    @keyframes pulseWarning {
+      0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+      70% { box-shadow: 0 0 0 6px rgba(245, 158, 11, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+    }
+
+    /* =========================================================
+       CONTAINER CENTRAL
+       ========================================================= */
+    .app-container { 
+      /* Altura total (100vh) - Header (65px) - Footer (35px) = 100px descontados */
+      height: calc(100vh - 100px); 
+      width: 100vw; 
+      display: flex; 
+      flex-direction: column;
+      overflow-y: auto; 
+      overflow-x: hidden; 
+    }
+
+    /* Estilo Premium para a Barra de Rolagem */
+    .app-container::-webkit-scrollbar { width: 8px; }
+    .app-container::-webkit-scrollbar-track { background: #f1f5f9; }
+    .app-container::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    .app-container::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+    /* =========================================================
+       FOOTER (RODAPÉ)
+       ========================================================= */
+    .pdf-footer {
+      height: 35px;
+      background-color: #ffffff;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      font-size: 0.75rem;
+      color: #64748b;
+      z-index: 1050;
+    }
+    
+    .footer-highlight {
+      color: #0f172a;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="pdf-header">
+    <div class="container-fluid px-4 d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center gap-3">
+        <div class="logo-circle">
+          <i class="material-icons text-white">picture_as_pdf</i>
+        </div>
+        <div>
+          <h1 class="h6 m-0 fw-bold text-white" style="letter-spacing: 0.02rem;">Estúdio PDF Pro</h1>
+          <small class="text-white-50 text-uppercase fw-bold" style="font-size: 0.65rem; letter-spacing: 0.08rem;">HCPA • SAMIS</small>
+        </div>
+      </div>
+      
+      <div class="d-flex align-items-center">
+        <div class="badge-testing">
+          <i class="material-icons fs-6 me-2">science</i> <span>Em fase de Teste</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="app-container">
+    <?!= estudioPdfComponent ?>
+  </div>
+
+  <footer class="pdf-footer">
+    <span>&copy; 2026 HCPA • SAMIS - Seção de Arquivo Médico e Informação em Saúde</span>
+    <span class="d-flex align-items-center gap-1">
+      Desenvolvido com <i class="material-icons text-danger" style="font-size: 14px;">favorite</i> por <span class="footer-highlight">Leonardo Klein Rocha (lklrocha)</span>
+    </span>
+  </footer>
+
+  <script>
+  // Garantir a inicialização segura após injeção do componente
+    document.addEventListener("DOMContentLoaded", function() {
+      console.log("PDF Studio Pro: Casca carregada. Verificando motor...");
+      
+      setTimeout(() => {
+        if (typeof window.PDF_STUDIO_INIT === 'function') {
+          window.PDF_STUDIO_INIT();
+          console.log("PDF Studio Pro: Motor inicializado com sucesso.");
+        } else {
+          console.error("PDF Studio: Função de inicialização não encontrada. Certifique-se de que a biblioteca gerou o script corretamente.");
+        }
+      }, 500);
+    });
+
+    // Script de Monitorização Automática (Heartbeat)
+function dispararPingPresenca() {
+  // Tenta capturar o modo atual da ferramenta se ele existir no escopo global
+  const ferramenta = typeof appMode !== 'undefined' ? appMode : 'Painel Inicial';
+  
+  if (typeof google !== 'undefined' && google.script && google.script.run) {
+    google.script.run
+      .withSuccessHandler(() => console.log("Métrica de presença atualizada."))
+      .withFailureHandler((err) => console.warn("Falha no ping:", err))
+      .registrarSessaoAtiva(ferramenta);
+  }
+}
+
+// Inicia o ciclo: envia o primeiro após 5s e repete a cada 30s
+document.addEventListener("DOMContentLoaded", function() {
+  setTimeout(() => {
+    dispararPingPresenca();
+    setInterval(dispararPingPresenca, 30000);
+  }, 5000);
+});
+  </script>
+</body>
+</html>
