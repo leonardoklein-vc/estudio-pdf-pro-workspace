@@ -26,9 +26,7 @@ Setores administrativos e clínicos manipulam centenas de PDFs diariamente. Quan
 Para contornar o limite de tempo de execução do Google Apps Script (6 minutos) e garantir a segurança dos dados, a arquitetura inverte a lógica tradicional: **o servidor envia o motor de processamento para o navegador do usuário**.
 
 Utilizando `pdf-lib`, `pdf.js` e `tesseract.js` embarcados no frontend, a manipulação binária ocorre inteiramente na memória RAM da máquina local. **O arquivo nunca sai do ambiente corporativo.**
-
-*(Insira aqui um print da tela inicial mostrando o grid com todas as ferramentas disponíveis)*
-> `![Tela Inicial - Hub de Ferramentas](./assets/hub_inicial.png)`
+<img width="1346" height="533" alt="pdf1" src="https://github.com/user-attachments/assets/9777f096-09ab-4ddf-ade9-19eb597cfef2" />
 
 ---
 
@@ -40,9 +38,7 @@ A suíte vai além da manipulação estrutural de arquivos, atuando como um assi
 * **🎓 Gerador de Quiz:** Criação automatizada de testes de múltipla escolha com gabarito a partir do conteúdo lido.
 * **🗣️ Leitor Imersivo (TTS):** Conversão de Texto para Voz com destaque visual síncrono (estilo "karaokê") para acessibilidade e multitarefa.
 * **🌐 Tradução Nativa:** Tradução de páginas inteiras preservando o jargão técnico e o contexto hospitalar.
-
-*(Insira aqui um print da interface de Chat com PDF ou do Leitor Imersivo)*
-> `![Interface de IA e Chat](./assets/modulo_ia.png)`
+<img width="1340" height="531" alt="pdf2" src="https://github.com/user-attachments/assets/81db6cc4-8816-4b7c-975e-b2d307935387" />
 
 ---
 
@@ -58,9 +54,7 @@ Mais de 15 ferramentas nativas rodando offline no navegador com suporte a *Drag 
 | **OCR Local** | Transforma imagens escaneadas em texto pesquisável (`tesseract.js`). |
 | **Timbre & Marca D'água** | Aplica sobreposições (Overlay) de papéis timbrados em todo o lote. |
 | **Conversor Universal** | Transforma DOCX, XLSX, PPTX e JPG para PDF utilizando a API do Google Drive como ponte térmica. |
-
-*(Insira aqui um print da mesa de trabalho, mostrando os PDFs como miniaturas, a Lupa de Zoom ou a ação de corte)*
-> `![Mesa de Trabalho - Manipulação](./assets/mesa_trabalho.png)`
+<img width="1339" height="521" alt="pdf4" src="https://github.com/user-attachments/assets/1db56cf7-1444-4ae7-857d-fb1b33ba482d" />
 
 ---
 
@@ -70,17 +64,14 @@ O sistema foi orquestrado para escalar por toda a instituição de forma modular
 
 1. **Core Library (O Motor):** Toda a lógica pesada e a interface gráfica (HTML/CSS) residem em um único repositório central. 
 2. **Client Shells (As Cascas):** Diferentes setores e planilhas invocam o componente injetando-o via `HtmlService`. Se uma regra de negócio mudar, o código é atualizado no *Core* e reflete instantaneamente na empresa inteira.
-
-*(Insira aqui um print do VS Code ou do Editor do Apps Script mostrando a árvore de arquivos limpa)*
-> `![Arquitetura de Pastas](./assets/arquitetura_pastas.png)`
+<img width="973" height="603" alt="pdf5" src="https://github.com/user-attachments/assets/8bedf9de-24e9-4243-a802-8b67c5aece5d" />
 
 ### 👁️ Torre de Controle (Real-Time Admin)
 Gestão visual para a equipe de TI auditar o uso da ferramenta em tempo real:
 * **Sistema de *Heartbeat*:** O frontend emite um "Ping" a cada 30 segundos via `PropertiesService`.
 * **Dashboard Administrativo:** Um painel exibe quem está online, o e-mail institucional e qual ferramenta exata está sendo utilizada naquele milissegundo.
+<img width="1998" height="787" alt="pdf7" src="https://github.com/user-attachments/assets/c79423ff-ad13-43fe-a40c-00f37d1afa9a" />
 
-*(Insira aqui um print do Painel Admin mostrando os usuários ativos na ferramenta)*
-> `![Torre de Controle Admin](./assets/painel_admin.png)`
 
 ---
 
